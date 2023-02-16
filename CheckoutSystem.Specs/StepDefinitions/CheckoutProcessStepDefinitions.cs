@@ -51,8 +51,6 @@ namespace CheckoutSystem.Specs.StepDefinitions
             calculator.AddOrder(numPeople, 0, numMains, numDrinks, time);
         }
 
-       
-
         [When(@"(.*) people order (.*) starters, (.*) mains, and (.*) drinks")]
         public void WhenPeopleOrderStartersMainsAndDrinks(int numPeople, int numStarters, int numMains, int numDrinks)
         {
@@ -64,6 +62,12 @@ namespace CheckoutSystem.Specs.StepDefinitions
         {
             originalBillTotal = calculator.CalculateBill(1);
         }
+        [When(@"the bill is updated and calculated after removal")]
+        public void WhenTheBillIsUpdatedAndCalculatedAfterRemoval()
+        {
+            originalBillTotal = calculator.CalculateBill();
+        }
+
 
         [Then(@"the updated bill total should be (.*)")]
         public void ThenTheUpdatedBillTotalShouldBe(Decimal expectedTotal)
@@ -71,23 +75,11 @@ namespace CheckoutSystem.Specs.StepDefinitions
             Assert.AreEqual(expectedTotal, calculator.GetBillTotal());
         }
 
-        //[When(@"the original bill total is stored")]
-        //public void WhenTheOriginalBillTotalIsStored()
-        //{
-        //    throw new PendingStepException();
-        //}
-
-        //[When(@"(.*) person's order is removed and the remaining orders are changed to (.*) starters, (.*) mains, and (.*) drinks")]
-        //public void WhenPersonsOrderIsRemovedAndTheRemainingOrdersAreChangedToStartersMainsAndDrinks(int p0, int p1, int p2, int p3)
-        //{
-        //    throw new PendingStepException();
-        //}
-
-        //[Then(@"the updated bill total should not be the same as the original bill total")]
-        //public void ThenTheUpdatedBillTotalShouldNotBeTheSameAsTheOriginalBillTotal()
-        //{
-        //    throw new PendingStepException();
-        //}
+        [When(@"(.*) person's order is removed and the remaining orders are changed to (.*) starters, (.*) mains, and (.*) drinks")]
+        public void WhenPersonsOrderIsRemovedAndTheRemainingOrdersAreChangedToStartersMainsAndDrinks(int numPeople, int numStarters, int numMains, int numDrinks)
+        {
+            calculator.UpdateOrder(0, numPeople, numStarters, numMains, numDrinks);
+        }
 
     }
 }

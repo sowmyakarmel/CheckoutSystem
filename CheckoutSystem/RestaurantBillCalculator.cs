@@ -20,6 +20,7 @@ public class RestaurantBillCalculator
     public void UpdateOrder(int index, int numPeople, int numStarters, int numMains, int numDrinks, Decimal time = 20)
     {
         orders[index] = (numPeople, numStarters, numMains, numDrinks, time);
+        billTotal = 0.0m;
     }
 
     public void RemoveOrder(int index)
