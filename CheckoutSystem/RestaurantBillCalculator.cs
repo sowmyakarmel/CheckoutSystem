@@ -27,29 +27,30 @@ public class RestaurantBillCalculator
         orders.RemoveAt(index);
     }
 
-    public decimal CalculateBill()
+    public decimal CalculateBill(int index = -1)
     {
         decimal total = 0.0m;
         decimal foodTotal = 0.0m;
 
+        var billOrders = index == -1 ? orders : new List<(int, int, int, int, Decimal)>() { orders[index] };
 
         // Calculate total for each order
-        foreach (var order in orders)
+        foreach (var order in billOrders)
         {
-            decimal orderTotal = (order.Item1 * STARTER_COST) + (order.Item2 * MAIN_COST) + (order.Item3 * DRINK_COST);
+            decimal orderTotal = (order.Item2 * STARTER_COST) + (order.Item3 * MAIN_COST) + (order.Item4 * DRINK_COST);
 
-            if (order.Item4 <= 19.00)
+            if (order.Item5 <= 19)
             {
                 // Apply discount for drinks before 19:00
                 decimal discount = order.Item3 * DRINK_COST * DISCOUNT_RATE;
                 orderTotal -= discount;
             }
-            foodTotal += (order.Item1 * STARTER_COST) + (order.Item2 * MAIN_COST);
+            foodTotal += (order.Item2 * STARTER_COST) + (order.Item3 * MAIN_COST);
 
             total += orderTotal;
         }
         total += foodTotal * SERVICE_CHARGE;
-        billTotal = total;
+        billTotal += total;
         return total;
     }
 
